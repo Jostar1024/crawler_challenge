@@ -14,18 +14,23 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    coderay (1.1.1)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
-    honeybadger (3.1.0)
     httpclient (2.8.3)
     i18n (0.8.1)
     logglier (0.5.0)
       multi_json (~> 1)
+    method_source (0.8.2)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rack (2.0.1)
     rack-protection (1.5.3)
       rack
@@ -35,6 +40,7 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
+    slop (3.6.0)
     statsd-instrument (2.1.2)
     thread_safe (0.3.6)
     tzinfo (1.2.2)
@@ -45,9 +51,9 @@ PLATFORMS
 
 DEPENDENCIES
   crawler_jobs!
-  honeybadger
   logglier
   nokogiri
+  pry
   statsd-instrument
 
 BUNDLED WITH
