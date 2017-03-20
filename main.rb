@@ -2,6 +2,19 @@ $:.unshift File.dirname(__FILE__)     # adds current directory to load path
 require 'setup'
 require 'json'
 
+class ArticlesJSONWorker < CrawlerJobs::HTTPClientWorker
+
+
+    def response(response)
+        products_first = JSON.parse(response)
+
+        products_first['products'].each { |p| 
+            puts p['imageUrl']
+        }
+    end
+
+end
+
 
 class ArticlesPageWorker < CrawlerJobs::HTTPClientWorker
 
@@ -10,33 +23,64 @@ class ArticlesPageWorker < CrawlerJobs::HTTPClientWorker
     # if Content-Type is application/json, with get_content we don't even
     # need to parse it using Nokogiri.
 
-    # document = Nokogiri::HTML(body)
-    # binding.pry
+    document = Nokogiri::HTML(body)
+
     # puts document
 
-    # parse the response in json using css selector or xpath.
-    # products = JSON.parse(document.css('p').text)
-    # products = JSON.parse(document.xpath('//p').text)
+    # This contents contain the url and storeId that we concern.
+    script_contain_url_storeId = document.css('head script:contains("bm")').text
 
-    products = JSON.parse(body)
-    # print the images' link on STDOUT
-    for i in 0..59
-        puts products['products'][i]['imageUrl']
-    end
+    # get all the neccessary information.
+    page_count = 60
+    search_url = script_contain_url_storeId.match("FAST_SEARCH:\s'(.+)'")[1]
+    storeId = script_contain_url_storeId.match("SUGGESTER_SEARCH:\s'.+storeId=(.+)'")[1]
+    binding.pry
+    
+    category = JSON.parse(document.css('script:contains("kategorie")').to_s.match('category\":({.+})}')[1])
 
-    open('test_' + Time::now.strftime('%Y%B%d_%H%M%S') + '.txt', 'a') { |f| 
-        f << products['products'][0, 3]
+    response_first = ArticlesJSONWorker.post_body(URI(search_url).to_s, {
+        'cat' => category['id'],
+        'p' => '1',
+        'pc' => page_count.to_s,
+        'order' => 'popularity_calculated',
+        'dir' =>'desc',
+        'storeId' => storeId.to_s
+    })
+
+    response_second = ArticlesJSONWorker.post_body(URI(search_url).to_s, {
+        'cat' => category['id'],
+        'p' => '2',
+        'pc' => page_count.to_s,
+        'order' => 'popularity_calculated',
+        'dir' =>'desc',
+        'storeId' => storeId.to_s
+    })
+
+
+   
+    
+
+
+    # for i in 0..59
+    #     puts products_first['products'][i]['imageUrl']
+    #     puts products_second['products'][i]['imageUrl']
+    # end
+
+    open('file.txt', 'a') { |f| 
+        f << body
     }
+
+
+    # open('test_' + Time::now.strftime('%Y%B%d_%H%M%S') + '.txt', 'a') { |f| 
+    #     f << products['products'][0, 3]
+    # }
   end
 
 end
 
 
-# ArticlesPageWorker.get_body('http://berlin.bringmeister.de/obst-gemuse.html')
+ArticlesPageWorker.get_body('http://berlin.bringmeister.de/obst-gemuse.html')
 # NOTE: ArticlesPageWorker.post_body(url, params, headers) also exists
-
-
-
 
 # "=>" here are read as "stands for"
 # cat => catagory
@@ -45,20 +89,20 @@ end
 # order => criteria for the ordering
 # dir => asc or desc
 # storeId I don't know
-ArticlesPageWorker.post_body('http://berlin.bringmeister.de/fast-search/index.php/', {
-    'cat' => '2323',
-    'p' => '1',
-    'pc' => '60',
-    'order' => 'popularity_calculated',
-    'dir' =>'desc',
-    'storeId' => '1'
-})
+# ArticlesPageWorker.post_body('http://berlin.bringmeister.de/fast-search/index.php/', {
+#     'cat' => '2323',
+#     'p' => '1',
+#     'pc' => '60',
+#     'order' => 'popularity_calculated',
+#     'dir' =>'desc',
+#     'storeId' => '1'
+# })
 
-ArticlesPageWorker.post_body('http://berlin.bringmeister.de/fast-search/index.php/', {
-    'cat' => '2323',
-    'p' => '2',
-    'pc' => '60',
-    'order' => 'popularity_calculated',
-    'dir' =>'desc',
-    'storeId' => '1'
-})
+# ArticlesPageWorker.post_body('http://berlin.bringmeister.de/fast-search/index.php/', {
+#     'cat' => '2323',
+#     'p' => '2',
+#     'pc' => '60',
+#     'order' => 'popularity_calculated',
+#     'dir' =>'desc',
+#     'storeId' => '1'
+# })
