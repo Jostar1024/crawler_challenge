@@ -38,6 +38,13 @@ class ArticlesPageWorker < CrawlerJobs::HTTPClientWorker
     
     category = JSON.parse(document.css('script:contains("kategorie")').to_s.match('category\":({.+})}')[1])
 
+    # "=>" here are read as "stands for"
+    # cat => catagory
+    # p => page
+    # pc => page count
+    # order => criteria for the ordering
+    # dir => asc or desc
+    # storeId I don't know
     response_first = ArticlesJSONWorker.post_body(URI(search_url).to_s, {
         'cat' => category['id'],
         'p' => '1',
@@ -56,16 +63,6 @@ class ArticlesPageWorker < CrawlerJobs::HTTPClientWorker
         'storeId' => storeId.to_s
     })
 
-
-   
-    
-
-
-    # for i in 0..59
-    #     puts products_first['products'][i]['imageUrl']
-    #     puts products_second['products'][i]['imageUrl']
-    # end
-
     open('file.txt', 'a') { |f| 
         f << body
     }
@@ -82,27 +79,3 @@ end
 ArticlesPageWorker.get_body('http://berlin.bringmeister.de/obst-gemuse.html')
 # NOTE: ArticlesPageWorker.post_body(url, params, headers) also exists
 
-# "=>" here are read as "stands for"
-# cat => catagory
-# p => page
-# pc => page count
-# order => criteria for the ordering
-# dir => asc or desc
-# storeId I don't know
-# ArticlesPageWorker.post_body('http://berlin.bringmeister.de/fast-search/index.php/', {
-#     'cat' => '2323',
-#     'p' => '1',
-#     'pc' => '60',
-#     'order' => 'popularity_calculated',
-#     'dir' =>'desc',
-#     'storeId' => '1'
-# })
-
-# ArticlesPageWorker.post_body('http://berlin.bringmeister.de/fast-search/index.php/', {
-#     'cat' => '2323',
-#     'p' => '2',
-#     'pc' => '60',
-#     'order' => 'popularity_calculated',
-#     'dir' =>'desc',
-#     'storeId' => '1'
-# })
