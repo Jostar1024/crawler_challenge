@@ -36,6 +36,21 @@ Please, in the end, send us a compressed file with the whole solution/project **
   * how to install any prerequisites
 
 
+# Extra Goals
+
+* instead of sending the logs to STDOUT, send them to
+  * https://simploratrials.loggly.com/sources/setup/ruby-app-setup
+  * ( you will receive the credentials via Slack )
+
+* instead of raising and logging the backtraces to STDOUT
+  * send the entire exception/error to http://docs.honeybadger.io/lib/ruby.html according to the documentation
+  * ( also for honeybadger you will receive the credentials via Slack. )
+
+* instead of logging the time the request took, send it to datadog
+  * install the agent
+  * use https://github.com/Shopify/statsd-instrument with `StatsD.backend = StatsD::Instrument::Backends::UDPBackend.new` and everything should work just fine (because the DataDog agent already listens on the default port of `localhost:8125`)
+
+
 # Bonus
 
 * describe how the HTTP library of your choice handles redirects. what does it do for

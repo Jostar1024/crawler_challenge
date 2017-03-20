@@ -52,6 +52,7 @@ PLATFORMS
 DEPENDENCIES
   crawler_jobs!
   logglier
+  minitest
   nokogiri
   pry
   statsd-instrument
