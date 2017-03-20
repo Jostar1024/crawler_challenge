@@ -9,4 +9,4 @@ gem 'honeybadger'       # error monitoring
 
 gem 'statsd-instrument' # metrics collector
 
-gem 'crawler-jobs'      # our implementation of a job queue library specifically for crawlers
+gem 'crawler_jobs', path: '../crawler_jobs'      # our implementation of a job queue library specifically for crawlers
