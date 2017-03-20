@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+
+# from http://blog.zachallett.com/pry-reload/
+def reload!
+  files = $LOADED_FEATURES.select { |feat| feat =~ /\/crawler_jobs\// }
+  files.each { |file| load file }
+end
+
+require 'pry'
+Pry.start
+
+require 'crawler_jobs'

@@ -7,7 +7,7 @@ class ArticlesPageWorker < CrawlerJobs::HTTPClientWorker
 
   def response(body)
     document = Nokogiri::HTML(body)
-
+    puts document
 
   end
 

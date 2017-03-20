@@ -1,0 +1,49 @@
+PATH
+  remote: .
+  specs:
+    crawler_jobs (0.1.0)
+      activesupport (~> 4.1)
+      httpclient (~> 2.8)
+      sidekiq (~> 4.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (4.2.6)
+      i18n (~> 0.7)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
+      tzinfo (~> 1.1)
+    coderay (1.1.1)
+    concurrent-ruby (1.0.2)
+    connection_pool (2.2.0)
+    httpclient (2.8.0)
+    i18n (0.7.0)
+    json (1.8.3)
+    method_source (0.8.2)
+    minitest (5.9.1)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    redis (3.3.0)
+    sidekiq (4.1.2)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      redis (~> 3.2, >= 3.2.1)
+    slop (3.6.0)
+    thread_safe (0.3.5)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.10)
+  crawler_jobs!
+  pry
+
+BUNDLED WITH
+   1.10.6
