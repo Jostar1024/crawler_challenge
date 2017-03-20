@@ -8,11 +8,13 @@ class ArticlesPageWorker < CrawlerJobs::HTTPClientWorker
   def response(body)
     document = Nokogiri::HTML(body)
 
+    binding.pry
 
+    puts document
   end
 
 end
 
 
-ArticlesPageWorker.get_body('http://muenchen.bringmeister.de/obst-gemuse.html')
+ArticlesPageWorker.get_body('http://berlin.bringmeister.de/obst-gemuse.html')
 # NOTE: ArticlesPageWorker.post_body(url, params, headers) also exists
