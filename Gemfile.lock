@@ -1,0 +1,23 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    honeybadger (3.1.0)
+    logglier (0.5.0)
+      multi_json (~> 1)
+    mini_portile2 (2.1.0)
+    multi_json (1.12.1)
+    nokogiri (1.7.1)
+      mini_portile2 (~> 2.1.0)
+    statsd-instrument (2.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  honeybadger
+  logglier
+  nokogiri
+  statsd-instrument
+
+BUNDLED WITH
+   1.14.4
